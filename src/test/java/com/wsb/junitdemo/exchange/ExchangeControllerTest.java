@@ -33,9 +33,11 @@ class ExchangeControllerTest {
 
     @Test
     void returns_amount_with_rate() throws Exception {
-        when(moneyService.getInPLN(any(Float.class))).thenReturn(4.501f);
+        when(moneyService.getInPLN(any(Float.class), any(String.class))).thenReturn(4.501f);
 
-        this.mockMvc.perform(get("/exchange").param("amount", "1.5"))
+        this.mockMvc.perform(get("/exchange")
+                                .param("amount", "7")
+                                .param("currency", "USD"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amountWithRate")
